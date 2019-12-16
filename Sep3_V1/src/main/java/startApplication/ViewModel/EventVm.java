@@ -6,9 +6,9 @@ import java.util.Date;
 
 public class EventVm {
     @JsonProperty("EventID")
-    private String eventID;
+    private int eventID;
     @JsonProperty("UserId")
-    private String userID;
+    private int userID;
 
     @JsonProperty("Street")
     private String streetName;
@@ -17,13 +17,13 @@ public class EventVm {
     @JsonProperty("PostCode")
     private int postalCode;
     @JsonProperty("BlockNumber")
-    private int blockNo;
+    private String blockNo;
 
     @JsonProperty("FloorNumber")
     private int floorNo;
 
     @JsonProperty("FlatNumber")
-    private int flatNumber;
+    private String flatNumber;
     @JsonProperty("BuildingNumber")
     private int buildingNumber;
 
@@ -46,7 +46,7 @@ public class EventVm {
     @JsonProperty("Entertainment")
     private boolean entertainment;
     @JsonProperty("EntryFee")
-    private int entryFee;
+    private double entryFee;
     @JsonProperty("Drinks")
     private boolean drinksVm;
 
@@ -58,48 +58,71 @@ public class EventVm {
     @JsonProperty("Dessert")
     private String Dessert;
 
-
-    @Override
-    public String toString() {
-        return "EventVm{" +
-                "eventID='" + eventID + '\'' +
-                ", userID='" + userID + '\'' +
-                ", streetName='" + streetName + '\'' +
-                ", city='" + city + '\'' +
-                ", postalCode=" + postalCode +
-                ", blockNo=" + blockNo +
-                ", floorNo=" + floorNo +
-                ", flatNumber=" + flatNumber +
-                ", buildingNumber=" + buildingNumber +
-                ", date='" + date + '\'' +
-                ", startTime='" + startTime + '\'' +
-                ", endTime='" + endTime + '\'' +
-                ", maxNoOfGuests=" + maxNoOfGuests +
-                ", ageLimit=" + ageLimit +
-                ", pets=" + pets +
-                ", description='" + description + '\'' +
-                ", entertainment=" + entertainment +
-                ", entryFee=" + entryFee +
-                ", drinksVm=" + drinksVm +
-                ", Starter='" + Starter + '\'' +
-                ", MainCourse='" + MainCourse + '\'' +
-                ", Dessert='" + Dessert + '\'' +
-                '}';
+    public EventVm() {
     }
 
-    public String getEventID() {
+    public EventVm(int eventID, int userID, String streetName, String city, int postalCode, String blockNo, int floorNo, String flatNumber, int buildingNumber, String date, String startTime, String endTime, int maxNoOfGuests, int ageLimit, boolean pets, String description, boolean entertainment, double entryFee, boolean drinksVm, String starter, String mainCourse, String dessert) {
+        this.eventID = eventID;
+        this.userID = userID;
+        this.streetName = streetName;
+        this.city = city;
+        this.postalCode = postalCode;
+        this.blockNo = blockNo;
+        this.floorNo = floorNo;
+        this.flatNumber = flatNumber;
+        this.buildingNumber = buildingNumber;
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.maxNoOfGuests = maxNoOfGuests;
+        this.ageLimit = ageLimit;
+        this.pets = pets;
+        this.description = description;
+        this.entertainment = entertainment;
+        this.entryFee = entryFee;
+        this.drinksVm = drinksVm;
+        Starter = starter;
+        MainCourse = mainCourse;
+        Dessert = dessert;
+    }
+
+    public EventVm(int eventID,  String streetName, String city, int postalCode, String blockNo, int floorNo, String flatNumber, int buildingNumber, String date, String startTime, String endTime, int maxNoOfGuests, int ageLimit, boolean pets, String description, boolean entertainment, double entryFee, boolean drinksVm, String starter, String mainCourse, String dessert) {
+        this.eventID = eventID;
+        this.streetName = streetName;
+        this.city = city;
+        this.postalCode = postalCode;
+        this.blockNo = blockNo;
+        this.floorNo = floorNo;
+        this.flatNumber = flatNumber;
+        this.buildingNumber = buildingNumber;
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.maxNoOfGuests = maxNoOfGuests;
+        this.ageLimit = ageLimit;
+        this.pets = pets;
+        this.description = description;
+        this.entertainment = entertainment;
+        this.entryFee = entryFee;
+        this.drinksVm = drinksVm;
+        Starter = starter;
+        MainCourse = mainCourse;
+        Dessert = dessert;
+    }
+
+    public int getEventID() {
         return eventID;
     }
 
-    public void setEventID(String eventID) {
+    public void setEventID(int eventID) {
         this.eventID = eventID;
     }
 
-    public String getUserID() {
+    public int getUserID() {
         return userID;
     }
 
-    public void setUserID(String userID) {
+    public void setUserID(int userID) {
         this.userID = userID;
     }
 
@@ -127,11 +150,11 @@ public class EventVm {
         this.postalCode = postalCode;
     }
 
-    public int getBlockNo() {
+    public String getBlockNo() {
         return blockNo;
     }
 
-    public void setBlockNo(int blockNo) {
+    public void setBlockNo(String blockNo) {
         this.blockNo = blockNo;
     }
 
@@ -143,11 +166,11 @@ public class EventVm {
         this.floorNo = floorNo;
     }
 
-    public int getFlatNumber() {
+    public String getFlatNumber() {
         return flatNumber;
     }
 
-    public void setFlatNumber(int flatNumber) {
+    public void setFlatNumber(String flatNumber) {
         this.flatNumber = flatNumber;
     }
 
@@ -223,11 +246,11 @@ public class EventVm {
         this.entertainment = entertainment;
     }
 
-    public int getEntryFee() {
+    public double getEntryFee() {
         return entryFee;
     }
 
-    public void setEntryFee(int entryFee) {
+    public void setEntryFee(double entryFee) {
         this.entryFee = entryFee;
     }
 
@@ -263,29 +286,32 @@ public class EventVm {
         Dessert = dessert;
     }
 
-    public EventVm(String eventID, String userID, String streetName, String city, int postalCode, int blockNo, int floorNo, int flatNumber, int buildingNumber, String date, String startTime, String endTime, int maxNoOfGuests, int ageLimit, boolean pets, String description, boolean entertainment, int entryFee, boolean drinksVm, String starter, String mainCourse, String dessert) {
-        this.eventID = eventID;
-        this.userID = userID;
-        this.streetName = streetName;
-        this.city = city;
-        this.postalCode = postalCode;
-        this.blockNo = blockNo;
-        this.floorNo = floorNo;
-        this.flatNumber = flatNumber;
-        this.buildingNumber = buildingNumber;
-        this.date = date;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.maxNoOfGuests = maxNoOfGuests;
-        this.ageLimit = ageLimit;
-        this.pets = pets;
-        this.description = description;
-        this.entertainment = entertainment;
-        this.entryFee = entryFee;
-        this.drinksVm = drinksVm;
-        Starter = starter;
-        MainCourse = mainCourse;
-        Dessert = dessert;
+    @Override
+    public String toString() {
+        return "EventVm{" +
+                "eventID='" + eventID + '\'' +
+                ", userID='" + userID + '\'' +
+                ", streetName='" + streetName + '\'' +
+                ", city='" + city + '\'' +
+                ", postalCode=" + postalCode +
+                ", blockNo=" + blockNo +
+                ", floorNo=" + floorNo +
+                ", flatNumber='" + flatNumber + '\'' +
+                ", buildingNumber=" + buildingNumber +
+                ", date='" + date + '\'' +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
+                ", maxNoOfGuests=" + maxNoOfGuests +
+                ", ageLimit=" + ageLimit +
+                ", pets=" + pets +
+                ", description='" + description + '\'' +
+                ", entertainment=" + entertainment +
+                ", entryFee=" + entryFee +
+                ", drinksVm=" + drinksVm +
+                ", Starter='" + Starter + '\'' +
+                ", MainCourse='" + MainCourse + '\'' +
+                ", Dessert='" + Dessert + '\'' +
+                '}';
     }
 }
 

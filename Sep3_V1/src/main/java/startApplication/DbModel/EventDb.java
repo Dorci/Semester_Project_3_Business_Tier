@@ -1,213 +1,260 @@
 package startApplication.DbModel;
 
+import java.util.HashMap;
+import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({
+        "eventId",
+        "userId",
+        "alcoholicDrink",
+        "startTime",
+        "endTime",
+        "description",
+        "ageLimit",
+        "pets",
+        "entertainment",
+        "maxNoOfGuests",
+        "entryFee",
+        "starter",
+        "mainCourse",
+        "dessert",
+        "dateOfEvent",
+        "addressId",
+        "address"
+})
 public class EventDb {
+
     @JsonProperty("EventId")
-    private int eventId;
+    private Integer eventId;
     @JsonProperty("UserId")
-    private int userId;
-
-
-    @JsonProperty("Address")
-    private AddressDb addressDb;
-
-    @JsonProperty("DateOfEvent")
-    private String date;
+    private Integer userId;
+    @JsonProperty("AlcoholicDrink")
+    private Boolean alcoholicDrink;
     @JsonProperty("StartTime")
     private String startTime;
     @JsonProperty("EndTime")
     private String endTime;
-    @JsonProperty("MaxNoOfGuests")
-    private int maxNoOfGuests;
-    @JsonProperty("AgeLimit")
-    private int ageLimit;
-    @JsonProperty("Pets")
-    private boolean pets;
-
     @JsonProperty("Description")
     private String description;
+    @JsonProperty("AgeLimit")
+    private Integer ageLimit;
+    @JsonProperty("Pets")
+    private Boolean pets;
     @JsonProperty("Entertainment")
-    private boolean entertainment;
+    private Boolean entertainment;
+    @JsonProperty("NrOfGuests")
+    private Integer maxNoOfGuests;
     @JsonProperty("EntryFee")
-    private int entryFee;
-    @JsonProperty("AlcoholicDrink")
-    private boolean drinksdb;
-
-
+    private Double entryFee;
     @JsonProperty("Starter")
-    private String Starter;
+    private String starter;
     @JsonProperty("MainCourse")
-    private String MainCourse;
+    private String mainCourse;
     @JsonProperty("Dessert")
-    private String Dessert;
+    private String dessert;
+    @JsonProperty("DateOfEvent")
+    private String dateOfEvent;
+    @JsonProperty("AddressId")
+    private Integer addressId;
+    @JsonProperty("Address")
+    private AddressDb address;
 
-
-    public EventDb(int eventId, int userId, AddressDb addressDb, String date, String startTime, String endTime, int maxNoOfGuests, int ageLimit, boolean pets, String description, boolean entertainment, int entryFee, boolean drinksdb, String starter, String mainCourse, String dessert) {
-        this.eventId = eventId;
-        this.userId = userId;
-        this.addressDb = addressDb;
-        this.date = date;
+    public EventDb(int userID, AddressDb addressdb, String date, String startTime, String endTime, int maxNoOfGuests, int ageLimit, boolean pets, String description, boolean entertainment, double entryFee, boolean drinksVm, String starter, String mainCourse, String dessert) {
+        this.userId = userID;
+        this.alcoholicDrink = drinksVm;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.maxNoOfGuests = maxNoOfGuests;
+        this.description = description;
         this.ageLimit = ageLimit;
         this.pets = pets;
-        this.description = description;
         this.entertainment = entertainment;
-        this.entryFee = entryFee;
-        this.drinksdb = drinksdb;
-        Starter = starter;
-        MainCourse = mainCourse;
-        Dessert = dessert;
-    }
-
-    public EventDb(int userId, AddressDb addressDb, String date, String startTime, String endTime, int maxNoOfGuests, int ageLimit, boolean pets, String description, boolean entertainment, int entryFee, boolean drinksdb, String starter, String mainCourse, String dessert) {
-        this.userId = userId;
-        this.addressDb = addressDb;
-        this.date = date;
-        this.startTime = startTime;
-        this.endTime = endTime;
         this.maxNoOfGuests = maxNoOfGuests;
-        this.ageLimit = ageLimit;
-        this.pets = pets;
-        this.description = description;
-        this.entertainment = entertainment;
         this.entryFee = entryFee;
-        this.drinksdb = drinksdb;
-        Starter = starter;
-        MainCourse = mainCourse;
-        Dessert = dessert;
+        this.starter = starter;
+        this.mainCourse = mainCourse;
+        this.dessert = dessert;
+        this.dateOfEvent = date;
+        this.address = addressdb;
     }
 
-    public int getEventId() {
+    public EventDb() {
+    }
+
+    @JsonProperty("eventId")
+    public Integer getEventId() {
         return eventId;
     }
 
-    public void setEventId(int eventId) {
+    @JsonProperty("eventId")
+    public void setEventId(Integer eventId) {
         this.eventId = eventId;
     }
 
-    public int getUserId() {
+    @JsonProperty("userId")
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    @JsonProperty("userId")
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public AddressDb getAddressDb() {
-        return addressDb;
+    @JsonProperty("alcoholicDrink")
+    public Boolean getAlcoholicDrink() {
+        return alcoholicDrink;
     }
 
-    public void setAddressDb(AddressDb addressDb) {
-        this.addressDb = addressDb;
+    @JsonProperty("alcoholicDrink")
+    public void setAlcoholicDrink(Boolean alcoholicDrink) {
+        this.alcoholicDrink = alcoholicDrink;
     }
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
+    @JsonProperty("startTime")
     public String getStartTime() {
         return startTime;
     }
 
+    @JsonProperty("startTime")
     public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
+    @JsonProperty("endTime")
     public String getEndTime() {
         return endTime;
     }
 
+    @JsonProperty("endTime")
     public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 
-    public int getMaxNoOfGuests() {
-        return maxNoOfGuests;
-    }
-
-    public void setMaxNoOfGuests(int maxNoOfGuests) {
-        this.maxNoOfGuests = maxNoOfGuests;
-    }
-
-    public int getAgeLimit() {
-        return ageLimit;
-    }
-
-    public void setAgeLimit(int ageLimit) {
-        this.ageLimit = ageLimit;
-    }
-
-    public boolean isPets() {
-        return pets;
-    }
-
-    public void setPets(boolean pets) {
-        this.pets = pets;
-    }
-
+    @JsonProperty("description")
     public String getDescription() {
         return description;
     }
 
+    @JsonProperty("description")
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public boolean isEntertainment() {
+    @JsonProperty("ageLimit")
+    public Integer getAgeLimit() {
+        return ageLimit;
+    }
+
+    @JsonProperty("ageLimit")
+    public void setAgeLimit(Integer ageLimit) {
+        this.ageLimit = ageLimit;
+    }
+
+    @JsonProperty("pets")
+    public Boolean getPets() {
+        return pets;
+    }
+
+    @JsonProperty("pets")
+    public void setPets(Boolean pets) {
+        this.pets = pets;
+    }
+
+    @JsonProperty("entertainment")
+    public Boolean getEntertainment() {
         return entertainment;
     }
 
-    public void setEntertainment(boolean entertainment) {
+    @JsonProperty("entertainment")
+    public void setEntertainment(Boolean entertainment) {
         this.entertainment = entertainment;
     }
 
-    public int getEntryFee() {
+    @JsonProperty("maxNoOfGuests")
+    public Integer getMaxNoOfGuests() {
+        return maxNoOfGuests;
+    }
+
+    @JsonProperty("maxNoOfGuests")
+    public void setMaxNoOfGuests(Integer maxNoOfGuests) {
+        this.maxNoOfGuests = maxNoOfGuests;
+    }
+
+    @JsonProperty("entryFee")
+    public Double getEntryFee() {
         return entryFee;
     }
 
-    public void setEntryFee(int entryFee) {
+    @JsonProperty("entryFee")
+    public void setEntryFee(Double entryFee) {
         this.entryFee = entryFee;
     }
 
-    public boolean isDrinksdb() {
-        return drinksdb;
-    }
-
-    public void setDrinksdb(boolean drinksdb) {
-        this.drinksdb = drinksdb;
-    }
-
+    @JsonProperty("starter")
     public String getStarter() {
-        return Starter;
+        return starter;
     }
 
+    @JsonProperty("starter")
     public void setStarter(String starter) {
-        Starter = starter;
+        this.starter = starter;
     }
 
+    @JsonProperty("mainCourse")
     public String getMainCourse() {
-        return MainCourse;
+        return mainCourse;
     }
 
+    @JsonProperty("mainCourse")
     public void setMainCourse(String mainCourse) {
-        MainCourse = mainCourse;
+        this.mainCourse = mainCourse;
     }
 
+    @JsonProperty("dessert")
     public String getDessert() {
-        return Dessert;
+        return dessert;
     }
 
+    @JsonProperty("dessert")
     public void setDessert(String dessert) {
-        Dessert = dessert;
+        this.dessert = dessert;
+    }
+
+    @JsonProperty("dateOfEvent")
+    public String getDateOfEvent() {
+        return dateOfEvent;
+    }
+
+    @JsonProperty("dateOfEvent")
+    public void setDateOfEvent(String dateOfEvent) {
+        this.dateOfEvent = dateOfEvent;
+    }
+
+    @JsonProperty("addressId")
+    public Integer getAddressId() {
+        return addressId;
+    }
+
+    @JsonProperty("addressId")
+    public void setAddressId(Integer addressId) {
+        this.addressId = addressId;
+    }
+
+    @JsonProperty("address")
+    public AddressDb getAddress() {
+        return address;
+    }
+
+    @JsonProperty("address")
+    public void setAddress(AddressDb address) {
+        this.address = address;
     }
 
     @Override
@@ -215,20 +262,21 @@ public class EventDb {
         return "EventDb{" +
                 "eventId=" + eventId +
                 ", userId=" + userId +
-                ", addressDb=" + addressDb +
-                ", date='" + date + '\'' +
+                ", alcoholicDrink=" + alcoholicDrink +
                 ", startTime='" + startTime + '\'' +
                 ", endTime='" + endTime + '\'' +
-                ", maxNoOfGuests=" + maxNoOfGuests +
+                ", description='" + description + '\'' +
                 ", ageLimit=" + ageLimit +
                 ", pets=" + pets +
-                ", description='" + description + '\'' +
                 ", entertainment=" + entertainment +
+                ", maxNoOfGuests=" + maxNoOfGuests +
                 ", entryFee=" + entryFee +
-                ", drinksdb=" + drinksdb +
-                ", Starter='" + Starter + '\'' +
-                ", MainCourse='" + MainCourse + '\'' +
-                ", Dessert='" + Dessert + '\'' +
+                ", starter='" + starter + '\'' +
+                ", mainCourse='" + mainCourse + '\'' +
+                ", dessert='" + dessert + '\'' +
+                ", dateOfEvent='" + dateOfEvent + '\'' +
+                ", addressId=" + addressId +
+                ", address=" + address +
                 '}';
     }
 }

@@ -1,4 +1,6 @@
 package startApplication.controllers;
+
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -6,18 +8,57 @@ import org.springframework.web.bind.annotation.*;
 import startApplication.DbModel.AddressDb;
 import startApplication.DbModel.CityDb;
 import startApplication.DbModel.EventDb;
-import startApplication.ViewModel.*;
+import startApplication.ViewModel.EventVm;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/startApplication/api")
-public class EventController extends ControllerNeeds
-{
+public class EventController extends ControllerNeeds {
 
     private List<EventDb> events = new ArrayList<>();
     private List<EventVm> eventsView = new ArrayList<>();
+
+
+
+
+    @RequestMapping(value = "/eventsId", method = RequestMethod.GET)
+    public Object getEventbyId(@RequestParam(value = "eventId") Integer eventId) {
+
+//        HttpEntity<String > eventHttpEntity = new HttpEntity<>(city);
+        if (eventId != 0) {
+
+
+//            return restTemplate.postForEntity
+//        ("https://localhost:5001/api/diningEvents/eventsId", e, EventDb.class);
+            String events = restTemplate.getForObject("https://localhost:5001/api/diningEvents/eventsId?eventId=" + eventId, String.class);
+
+            try {
+                List<EventDb> eventsFromDatabase = objectMapper.readValue(events, new TypeReference<List<EventDb>>() {
+                });
+
+                List<EventVm> eventsForUser = new ArrayList<>();
+
+                for (EventDb databaseEvent : eventsFromDatabase) {
+                    System.out.println(databaseEvent);
+//                    CityVm cityForView = new CityVm(databaseEvent.getAddress().getCity().getCityName(),databaseEvent.getAddress().getCity().getPostalCode());
+//                    AddressVm addressForView = new AddressVm(databaseEvent.getAddress().getStreetName(),databaseEvent.getAddress().getBuildingNo(),databaseEvent.getAddress().getCity().getCityName(),databaseEvent.getAddress().getCity().getPostalCode(),databaseEvent.getAddress().getBlock(),databaseEvent.getAddress().getFloor(),databaseEvent.getAddress().getFlat());
+                    EventVm eventForView = new EventVm(databaseEvent.getEventId(), databaseEvent.getAddress().getStreetName(), databaseEvent.getAddress().getCity().getCityName(), databaseEvent.getAddress().getCity().getPostalCode(), databaseEvent.getAddress().getBlock(), databaseEvent.getAddress().getFloor(), databaseEvent.getAddress().getFlat(), databaseEvent.getAddress().getBuildingNo(), databaseEvent.getDateOfEvent(), databaseEvent.getStartTime(), databaseEvent.getEndTime(), databaseEvent.getMaxNoOfGuests(), databaseEvent.getAgeLimit(), databaseEvent.getPets(), databaseEvent.getDescription(), databaseEvent.getEntertainment(), databaseEvent.getEntryFee(), databaseEvent.getAlcoholicDrink(), databaseEvent.getStarter(), databaseEvent.getMainCourse(), databaseEvent.getDessert());
+                    eventsForUser.add(eventForView);
+                }
+
+                return ResponseEntity.status(HttpStatus.OK).body(eventsForUser);
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+
+            }
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Try again!");
+    }
 
 
     @RequestMapping(value = "/newEvent", method = RequestMethod.POST)
@@ -29,17 +70,17 @@ public class EventController extends ControllerNeeds
 ////        HttpEntity<EventDb> eventDbHttpEntity = new HttpEntity<>(eventDb);
 //        System.out.println(events.toString());
 //        events.add(eventDb);
-        CityDb cityDb = new CityDb(event.getCity(),event.getPostalCode());
-        AddressDb addressdb = new AddressDb(event.getStreetName(),event.getBuildingNumber(),cityDb,event.getBlockNo() + "",event.getFloorNo());
+        CityDb cityDb = new CityDb(event.getCity(), event.getPostalCode());
+        AddressDb addressdb = new AddressDb(event.getStreetName(), event.getBuildingNumber(), cityDb, event.getFlatNumber(), event.getBlockNo(), event.getFloorNo());
 
-        EventDb eventDb = new EventDb(Integer.parseInt(event.getUserID()),addressdb,event.getDate(),event.getStartTime(),event.getEndTime(),event.getMaxNoOfGuests(),event.getAgeLimit(),event.isPets(),event.getDescription(),event.isEntertainment(),event.getEntryFee(),event.isDrinksVm(),event.getStarter(),event.getMainCourse(),event.getDessert());
+        EventDb eventDb = new EventDb(event.getUserID(), addressdb, event.getDate(), event.getStartTime(), event.getEndTime(), event.getMaxNoOfGuests(), event.getAgeLimit(), event.isPets(), event.getDescription(), event.isEntertainment(), event.getEntryFee(), event.isDrinksVm(), event.getStarter(), event.getMainCourse(), event.getDessert());
 
         System.out.println(event);
         System.out.println(eventDb);
-        HttpEntity<EventDb> eventhttpEntity = new HttpEntity<>(eventDb);
+        HttpEntity<EventDb> eventHttpEntity = new HttpEntity<>(eventDb);
 
-        restTemplate.postForLocation("https://localhost:5001/api/diningEvents/newEvent", eventhttpEntity);
-        var response = restTemplate.postForEntity("https://localhost:5001/api/diningEvents/newEvent", eventDb, EventDb.class);
+//        restTemplate.postForLocation("https://localhost:44303/api/diningEvents/newEvent", eventHttpEntity);
+        var response = restTemplate.postForEntity("https://localhost:44303/api/diningEvents/newEvent", eventDb, EventDb.class);
 
 //        events.add(eventDb);
 //        System.out.println(events);
@@ -51,8 +92,6 @@ public class EventController extends ControllerNeeds
 
 
     }
-
-
 
 
 //
@@ -71,7 +110,7 @@ public class EventController extends ControllerNeeds
 //        eventsView.add(new EventVm("09-09-2019", "2:00", "16:00", "Part!", "English", addressVm, 90, 87, true, true, drinksVm, menuVm, 90,));
 
 
-
+//        return restTemplate.getForObject("https://localhost:5001/api/diningEvents", String.class);
         return ResponseEntity.status(HttpStatus.OK).body(events);
     }
 
@@ -92,9 +131,8 @@ public class EventController extends ControllerNeeds
 //
 //    }
 
-    @RequestMapping(value = "/details",method = RequestMethod.GET)
-    public ResponseEntity<?> eventDetails(@RequestBody String eventId)
-    {
+    @RequestMapping(value = "/details", method = RequestMethod.GET)
+    public ResponseEntity<?> eventDetails(@RequestBody String eventId) {
 //        for (int i =0; i<events.size();i++)
 //        {
 //            if(events.get(i).getEventId() == eventId)
@@ -105,6 +143,43 @@ public class EventController extends ControllerNeeds
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Event does not exist!");
 
     }
+
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public Object searchEventByCity(@RequestParam(value = "city") String city) {
+
+
+//        HttpEntity<String > eventHttpEntity = new HttpEntity<>(city);
+        if (city != null) {
+
+
+//            return restTemplate.postForEntity
+//        ("https://localhost:5001/api/diningEvents/search", city, EventDb.class);
+            String events = restTemplate.getForObject("https://localhost:5001/api/diningEvents/search?city=" + city, String.class);
+
+            try {
+                List<EventDb> eventsFromDatabase = objectMapper.readValue(events, new TypeReference<List<EventDb>>() {
+                });
+
+                List<EventVm> eventsForUser = new ArrayList<>();
+
+                for (EventDb databaseEvent : eventsFromDatabase) {
+//                    CityVm cityForView = new CityVm(databaseEvent.getAddress().getCity().getCityName(),databaseEvent.getAddress().getCity().getPostalCode());
+//                    AddressVm addressForView = new AddressVm(databaseEvent.getAddress().getStreetName(),databaseEvent.getAddress().getBuildingNo(),databaseEvent.getAddress().getCity().getCityName(),databaseEvent.getAddress().getCity().getPostalCode(),databaseEvent.getAddress().getBlock(),databaseEvent.getAddress().getFloor(),databaseEvent.getAddress().getFlat());
+                    EventVm eventForView = new EventVm(databaseEvent.getEventId(), databaseEvent.getAddress().getStreetName(), databaseEvent.getAddress().getCity().getCityName(), databaseEvent.getAddress().getCity().getPostalCode(), databaseEvent.getAddress().getBlock(), databaseEvent.getAddress().getFloor(), databaseEvent.getAddress().getFlat(), databaseEvent.getAddress().getBuildingNo(), databaseEvent.getDateOfEvent(), databaseEvent.getStartTime(), databaseEvent.getEndTime(), databaseEvent.getMaxNoOfGuests(), databaseEvent.getAgeLimit(), databaseEvent.getPets(), databaseEvent.getDescription(), databaseEvent.getEntertainment(), databaseEvent.getEntryFee(), databaseEvent.getAlcoholicDrink(), databaseEvent.getStarter(), databaseEvent.getMainCourse(), databaseEvent.getDessert());
+                    eventsForUser.add(eventForView);
+                }
+
+                return ResponseEntity.status(HttpStatus.OK).body(eventsForUser);
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+
+            }
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Search again!");
+    }
+
 
     //Send back events to view after sending object reference to db
     //Event has to have a host in order to map email address

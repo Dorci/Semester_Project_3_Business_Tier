@@ -1,59 +1,65 @@
 package startApplication.DbModel;
 
+import java.util.HashMap;
+import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-public class CityDb
-{
-    @JsonProperty("CityId")
-   private int CityId;
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({
+        "cityId",
+        "cityName",
+        "postalCode"
+})
+public class CityDb {
 
-    @JsonProperty("CityName")
-    private String CityName;
+    @JsonProperty("cityId")
+    private Integer cityId;
+    @JsonProperty("cityName")
+    private String cityName;
+    @JsonProperty("postalCode")
+    private Integer postalCode;
 
-    @JsonProperty("PostalCode")
-    private int postalCode;
-
-    public CityDb(String cityName, int postalCode) {
-        CityName = cityName;
+    public CityDb(String cityName, Integer postalCode) {
+        this.cityName = cityName;
         this.postalCode = postalCode;
     }
 
-    public CityDb(int cityId, String cityName, int postalCode) {
-        CityId = cityId;
-        CityName = cityName;
-        this.postalCode = postalCode;
+    public CityDb() {
     }
 
-    public int getCityId() {
-        return CityId;
+    @JsonProperty("cityId")
+    public Integer getCityId() {
+        return cityId;
     }
 
-    public void setCityId(int cityId) {
-        CityId = cityId;
+    @JsonProperty("cityId")
+    public void setCityId(Integer cityId) {
+        this.cityId = cityId;
     }
 
+    @JsonProperty("cityName")
     public String getCityName() {
-        return CityName;
+        return cityName;
     }
 
+    @JsonProperty("cityName")
     public void setCityName(String cityName) {
-        CityName = cityName;
+        this.cityName = cityName;
     }
 
-    public int getPostalCode() {
+    @JsonProperty("postalCode")
+    public Integer getPostalCode() {
         return postalCode;
     }
 
-    public void setPostalCode(int postalCode) {
+    @JsonProperty("postalCode")
+    public void setPostalCode(Integer postalCode) {
         this.postalCode = postalCode;
     }
 
-    @Override
-    public String toString() {
-        return "CityDb{" +
-                "CityId=" + CityId +
-                ", CityName='" + CityName + '\'' +
-                ", postalCode=" + postalCode +
-                '}';
-    }
 }

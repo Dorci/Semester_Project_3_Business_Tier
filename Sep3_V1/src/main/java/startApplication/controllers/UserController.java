@@ -1,16 +1,20 @@
 package startApplication.controllers;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import startApplication.DbModel.EventDb;
 import startApplication.DbModel.UserDb;
+import startApplication.ViewModel.EventVm;
 import startApplication.ViewModel.UserVm;
 import startApplication.controllers.ControllerNeeds;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,52 +26,85 @@ public class UserController extends ControllerNeeds
     private List<UserDb> users = new ArrayList<>();
     private List<UserVm> usersView = new ArrayList<>();
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> addNewUser(@RequestBody UserVm userVm)
-    {
-
-//        List<UserDb> userDb = new ArrayList<>();
 
 
-//
-//        String resourceUrl
-//                = "https://:5001/api/values";
-//        RestTemplate restTemplate = new RestTemplate();
-//
-//        HttpEntity<UserVm> request = new HttpEntity<>();
-//        UserDb users = restTemplate.postForObject(resourceUrl, request, UserDb.class);
-//
-//
-//        ResponseEntity<UserDb> response = restTemplate
-//                .exchange(resourceUrl, HttpMethod.POST, request, UserDb.class);
-//
-//
-//        UserDb userDb1 = response.getBody();
+    @RequestMapping(value = "/userEmail", method = RequestMethod.GET)
+    public Object getUserbyEmail(@RequestParam(value = "email") String email) {
 
-        UserDb userDb = new UserDb(userVm.getUserId(),userVm.getFirstName(),userVm.getLastName(),userVm.getEmailAddress(),userVm.getDob(),userVm.getPassword(),userVm.getConfirmPassword());
-        users.add(userDb);
-        System.out.println(users);
-        System.out.println(userDb);
-        //System.out.println(eventsView);
-        System.out.println("user added");
-        return ResponseEntity.status(HttpStatus.CREATED).body(users);
+        if (email != null) {
 
-    }
+            String users = restTemplate.getForObject("https://localhost:5001/api/users/userEmail?email=" + email, String.class);
 
-    @RequestMapping(value = "/userDetails",method = RequestMethod.GET)
-    public ResponseEntity<?> eventDetails(@RequestBody String userId)
-    {
-        for (int i =0; i<users.size();i++)
-        {
-            if(users.get(i).getUserId() == userId)
-            {
-                return ResponseEntity.status(HttpStatus.OK).body(users.get(i));
+            try {
+                List<UserDb> usersFromDatabase = objectMapper.readValue(users, new TypeReference<List<UserDb>>() {
+                });
+
+                List<UserVm> usersForView = new ArrayList<>();
+
+                for (UserDb userDb : usersFromDatabase) {
+//
+                    UserVm userVm = new UserVm(userDb.getUserId(),userDb.getFirstName(),userDb.getLastName(),userDb.getEmailAddress(),userDb.getDob());
+                    usersForView.add(userVm);
+
+                }
+
+                return ResponseEntity.status(HttpStatus.OK).body(usersForView);
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+
             }
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User does not exist!");
-
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Try again!");
     }
+
+//    @RequestMapping(value = "/register", method = RequestMethod.POST)
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public ResponseEntity<?> addNewUser(@RequestBody UserVm userVm)
+//    {
+//
+////        List<UserDb> userDb = new ArrayList<>();
+//
+//
+////
+////        String resourceUrl
+////                = "https://:5001/api/values";
+////        RestTemplate restTemplate = new RestTemplate();
+////
+////        HttpEntity<UserVm> request = new HttpEntity<>();
+////        UserDb users = restTemplate.postForObject(resourceUrl, request, UserDb.class);
+////
+////
+////        ResponseEntity<UserDb> response = restTemplate
+////                .exchange(resourceUrl, HttpMethod.POST, request, UserDb.class);
+////
+////
+////        UserDb userDb1 = response.getBody();
+//
+//        UserDb userDb = new UserDb(userVm.getUserId(),userVm.getFirstName(),userVm.getLastName(),userVm.getEmailAddress(),userVm.getDob(),userVm.getPassword(),userVm.getConfirmPassword());
+//        users.add(userDb);
+//        System.out.println(users);
+//        System.out.println(userDb);
+//        //System.out.println(eventsView);
+//        System.out.println("user added");
+//        return ResponseEntity.status(HttpStatus.CREATED).body(users);
+//
+//    }
+
+//    @RequestMapping(value = "/userDetails",method = RequestMethod.GET)
+//    public ResponseEntity<?> eventDetails(@RequestBody String userId)
+//    {
+//        for (int i =0; i<users.size();i++)
+//        {
+//            if(users.get(i).getUserId() == userId)
+//            {
+//                return ResponseEntity.status(HttpStatus.OK).body(users.get(i));
+//            }
+//        }
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User does not exist!");
+//
+//    }
 
 
     @RequestMapping(value = "/allUsers", method = RequestMethod.GET)
@@ -91,40 +128,63 @@ public class UserController extends ControllerNeeds
         return ResponseEntity.status(HttpStatus.OK).body(users);
     }
 
-    @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> updateUser(@RequestBody UserVm userVm)
-    {
-
-//        List<UserDb> userDb = new ArrayList<>();
-
-
+//    @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public ResponseEntity<?> updateUser(@RequestBody UserVm userVm)
+//    {
 //
-//        String resourceUrl
-//                = "https://:5001/api/values";
-//        RestTemplate restTemplate = new RestTemplate();
-//
-//        HttpEntity<UserVm> request = new HttpEntity<>();
-//        UserDb users = restTemplate.postForObject(resourceUrl, request, UserDb.class);
+////        List<UserDb> userDb = new ArrayList<>();
 //
 //
-//        ResponseEntity<UserDb> response = restTemplate
-//                .exchange(resourceUrl, HttpMethod.POST, request, UserDb.class);
+////
+////        String resourceUrl
+////                = "https://:5001/api/values";
+////        RestTemplate restTemplate = new RestTemplate();
+////
+////        HttpEntity<UserVm> request = new HttpEntity<>();
+////        UserDb users = restTemplate.postForObject(resourceUrl, request, UserDb.class);
+////
+////
+////        ResponseEntity<UserDb> response = restTemplate
+////                .exchange(resourceUrl, HttpMethod.POST, request, UserDb.class);
+////
+////
+////        UserDb userDb1 = response.getBody();
+//
+//        UserDb userDb = new UserDb(userVm.getUserId(),userVm.getFirstName(),userVm.getLastName(),userVm.getEmailAddress(),userVm.getDob(),userVm.getPassword(),userVm.getConfirmPassword());
+//        users.add(userDb);
+//        System.out.println(users);
+//        System.out.println(userDb);
+//        //System.out.println(eventsView);
+//        System.out.println("user updated");
+//        return ResponseEntity.status(HttpStatus.ACCEPTED).body(users);
+//
+//    }
+
+
+//    @RequestMapping(value = "/register", method = RequestMethod.POST)
+//    public Object registerUser(@RequestBody UserVm userVm)
+//    {
+//
+//        if (userVm!=null) {
+//            UserDb newUser = new UserDb(userVm.getFirstName(),userVm.getLastName(),userVm.getEmailAddress(),userVm.getDob(),userVm.getPassword());
+//            HttpEntity<UserDb> newUser = new HttpEntity<>();
+//
+//            try {
+//                restTemplate.postForLocation("https://localhost:5001/api/users/newUser",newUser);
+//                 return  new ResponseEntity<>(HttpStatus.CREATED);
 //
 //
-//        UserDb userDb1 = response.getBody();
-
-        UserDb userDb = new UserDb(userVm.getUserId(),userVm.getFirstName(),userVm.getLastName(),userVm.getEmailAddress(),userVm.getDob(),userVm.getPassword(),userVm.getConfirmPassword());
-        users.add(userDb);
-        System.out.println(users);
-        System.out.println(userDb);
-        //System.out.println(eventsView);
-        System.out.println("user updated");
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(users);
-
-    }
-
-
-
-
+//            } catch (RestClientException e) {
+//                e.printStackTrace();
+//                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//
+//            }
+//        }
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Try again!");
+//    }
+//
+//
+//
+//
 }

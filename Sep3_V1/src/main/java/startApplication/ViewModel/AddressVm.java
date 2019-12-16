@@ -13,18 +13,20 @@ public class AddressVm
     @JsonProperty("postCode")
     private int postalCode;
     @JsonProperty("blockNumber")
-    private int blockNo;
+    private String blockNo;
     @JsonProperty("floorNumber")
     private int floorNo;
 
-    public AddressVm(String streetName, int buildingNumber, String city,
-                     int postalCode, int blockNo, int floorNo) {
+    private String flatNumber;
+
+    public AddressVm(String streetName, int buildingNumber, String city, int postalCode, String blockNo, int floorNo, String flatNumber) {
         this.streetName = streetName;
         this.buildingNumber = buildingNumber;
         this.city = city;
         this.postalCode = postalCode;
         this.blockNo = blockNo;
         this.floorNo = floorNo;
+        this.flatNumber = flatNumber;
     }
 
     public String getStreetName() {
@@ -59,11 +61,11 @@ public class AddressVm
         this.postalCode = postalCode;
     }
 
-    public int getBlockNo() {
+    public String getBlockNo() {
         return blockNo;
     }
 
-    public void setBlockNo(int blockNo) {
+    public void setBlockNo(String blockNo) {
         this.blockNo = blockNo;
     }
 
@@ -75,15 +77,24 @@ public class AddressVm
         this.floorNo = floorNo;
     }
 
+    public String getFlatNumber() {
+        return flatNumber;
+    }
+
+    public void setFlatNumber(String flatNumber) {
+        this.flatNumber = flatNumber;
+    }
+
     @Override
     public String toString() {
-        return "Address{" +
+        return "AddressVm{" +
                 "streetName='" + streetName + '\'' +
                 ", buildingNumber=" + buildingNumber +
                 ", city='" + city + '\'' +
                 ", postalCode=" + postalCode +
                 ", blockNo=" + blockNo +
                 ", floorNo=" + floorNo +
+                ", flatNumber='" + flatNumber + '\'' +
                 '}';
     }
 }

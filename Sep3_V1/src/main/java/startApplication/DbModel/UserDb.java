@@ -5,37 +5,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class UserDb
 {
 
-    @JsonProperty("UserId")
-    private String userId;
-    @JsonProperty("FirstName")
+    @JsonProperty("userId")
+    private int userId;
+    @JsonProperty("fName")
     private String firstName;
-    @JsonProperty("LastName")
+    @JsonProperty("lName")
     private String lastName;
-    @JsonProperty("emailAddress")
+    @JsonProperty("email")
     private String emailAddress;
-    @JsonProperty("DOB")
+    @JsonProperty("dob")
     private String dob;
-    @JsonProperty("Password")
+    @JsonProperty("password")
     private String password;
     @JsonProperty("ConfirmPAssword")
-
-    @Override
-    public String toString() {
-        return "UserDb{" +
-                "userId='" + userId + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", emailAddress='" + emailAddress + '\'' +
-                ", dob='" + dob + '\'' +
-                ", password='" + password + '\'' +
-                ", confirmPassword='" + confirmPassword + '\'' +
-                '}';
-    }
-
-
     private String confirmPassword;
 
-    public UserDb(String userId, String firstName, String lastName, String emailAddress, String dob, String password, String confirmPassword) {
+    public UserDb(int userId, String firstName, String lastName, String emailAddress, String dob, String password, String confirmPassword) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -45,11 +30,22 @@ public class UserDb
         this.confirmPassword = confirmPassword;
     }
 
-    public String getUserId() {
+    public UserDb(String firstName, String lastName, String emailAddress, String dob, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.emailAddress = emailAddress;
+        this.dob = dob;
+        this.password = password;
+    }
+
+    public UserDb() {
+    }
+
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
@@ -99,5 +95,18 @@ public class UserDb
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDb{" +
+                "userId=" + userId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", emailAddress='" + emailAddress + '\'' +
+                ", dob='" + dob + '\'' +
+                ", password='" + password + '\'' +
+                ", confirmPassword='" + confirmPassword + '\'' +
+                '}';
     }
 }
