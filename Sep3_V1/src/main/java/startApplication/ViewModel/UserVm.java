@@ -5,14 +5,36 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserVm
 {
+
     private int userId;
+    @JsonProperty("fName")
     private String firstName;
+    @JsonProperty("lName")
     private String lastName;
+    @JsonProperty("email")
     private String emailAddress;
+    @JsonProperty("dob")
     private String dob;
+    @JsonProperty("password")
     private String password;
     private String confirmPassword;
 
+    public UserVm(String firstName, String lastName, String emailAddress, String dob, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.emailAddress = emailAddress;
+        this.dob = dob;
+        this.password = password;
+    }
+
+    public UserVm(int userId, String firstName, String lastName, String emailAddress, String dob, String password) {
+        this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.emailAddress = emailAddress;
+        this.dob = dob;
+        this.password = password;
+    }
 
     public UserVm(int userId, String firstName, String lastName, String emailAddress, String dob, String password, String confirmPassword) {
         this.userId = userId;
@@ -30,6 +52,10 @@ public class UserVm
         this.lastName = lastName;
         this.emailAddress = emailAddress;
         this.dob = dob;
+    }
+
+
+    public UserVm() {
     }
 
     public int getUserId() {
@@ -88,7 +114,7 @@ public class UserVm
         this.confirmPassword = confirmPassword;
     }
 
-    //    @JsonProperty("firstName")
+//    //    @JsonProperty("firstName")
 //    private String firstName;
 //    @JsonProperty("lastName")
 //    private String lastName;
@@ -100,18 +126,4 @@ public class UserVm
 //    private String password;
 //    @JsonIgnore
 //    private int userID;
-
-
-    @Override
-    public String toString() {
-        return "UserVm{" +
-                "userId='" + userId + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", emailAddress='" + emailAddress + '\'' +
-                ", dob='" + dob + '\'' +
-                ", password='" + password + '\'' +
-                ", confirmPassword='" + confirmPassword + '\'' +
-                '}';
-    }
 }

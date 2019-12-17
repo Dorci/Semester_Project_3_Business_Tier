@@ -30,6 +30,15 @@ public class UserDb
         this.confirmPassword = confirmPassword;
     }
 
+    public UserDb(int userId, String firstName, String lastName, String emailAddress, String dob, String password) {
+        this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.emailAddress = emailAddress;
+        this.dob = dob;
+        this.password = password;
+    }
+
     public UserDb(String firstName, String lastName, String emailAddress, String dob, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
