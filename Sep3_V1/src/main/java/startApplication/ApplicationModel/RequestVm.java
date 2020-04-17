@@ -1,4 +1,4 @@
-package startApplication.ViewModel;
+package startApplication.ApplicationModel;
 
 import java.util.Date;
 

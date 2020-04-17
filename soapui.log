@@ -1,0 +1,3 @@
+2020-04-17 10:15:46,686 WARN  [DefaultSoapUICore] Missing folder [C:\Users\fiona\ext] for external libraries
+2020-04-17 10:15:46,895 INFO  [DefaultSoapUICore] initialized soapui-settings from [C:\Users\fiona\soapui-settings.xml]
+2020-04-17 10:15:47,325 INFO  [WorkspaceImpl] Loading workspace from [C:\Users\fiona\intellij-soapui-workspace.xml]

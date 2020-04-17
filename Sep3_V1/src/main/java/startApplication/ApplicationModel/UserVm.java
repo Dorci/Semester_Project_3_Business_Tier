@@ -1,6 +1,5 @@
-package startApplication.ViewModel;
+package startApplication.ApplicationModel;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserVm
@@ -18,33 +17,6 @@ public class UserVm
     @JsonProperty("password")
     private String password;
     private String confirmPassword;
-
-    public UserVm(String firstName, String lastName, String emailAddress, String dob, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.emailAddress = emailAddress;
-        this.dob = dob;
-        this.password = password;
-    }
-
-    public UserVm(int userId, String firstName, String lastName, String emailAddress, String dob, String password) {
-        this.userId = userId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.emailAddress = emailAddress;
-        this.dob = dob;
-        this.password = password;
-    }
-
-    public UserVm(int userId, String firstName, String lastName, String emailAddress, String dob, String password, String confirmPassword) {
-        this.userId = userId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.emailAddress = emailAddress;
-        this.dob = dob;
-        this.password = password;
-        this.confirmPassword = confirmPassword;
-    }
 
     public UserVm(int userId, String firstName, String lastName, String emailAddress, String dob) {
         this.userId = userId;
@@ -114,16 +86,4 @@ public class UserVm
         this.confirmPassword = confirmPassword;
     }
 
-//    //    @JsonProperty("firstName")
-//    private String firstName;
-//    @JsonProperty("lastName")
-//    private String lastName;
-//    @JsonProperty("emailAddress")
-//    private String emailAddress;
-//    @JsonProperty("age")
-//    private int age;
-//    @JsonProperty("password")
-//    private String password;
-//    @JsonIgnore
-//    private int userID;
 }

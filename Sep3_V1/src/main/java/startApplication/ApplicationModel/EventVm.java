@@ -1,8 +1,6 @@
-package startApplication.ViewModel;
+package startApplication.ApplicationModel;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.Date;
 
 public class EventVm {
     @JsonProperty("EventID")
